@@ -1,0 +1,15 @@
+export NDKDIR=/home/x64/Android/Sdk/ndk/25.2.9519653
+export NDKABI=26
+export NDKARCH="i686" #aarch64 or x86_64
+export NDKBIN=$NDKDIR/toolchains/llvm/prebuilt/linux-x86_64/bin
+export NDKCROSS=$NDKBIN/$NDKARCH-linux-androidabi-
+export NDKCC=$NDKBIN/$NDKARCH-linux-android$NDKABI-clang
+make HOST_CC="clang -m32" CROSS=$NDKCROSS \
+     STATIC_CC=$NDKCC DYNAMIC_CC="$NDKCC -fPIC" \
+     TARGET_LD=$NDKCC TARGET_AR="$NDKBIN/llvm-ar rcus" \
+     TARGET_STRIP=$NDKBIN/llvm-strip TARGET_SYS="Linux" clean default
+
+
+-m64 , -m32 flags warning
+x86 build req:
+yay -S lib32-gcc-libs
